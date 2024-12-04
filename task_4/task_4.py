@@ -1,16 +1,28 @@
 def parse_input(user_input):
-    cmd, *args = user_input.split()
-    cmd = cmd.strip().lower()
-    return cmd, *args
+    try:
+        cmd, *args = user_input.split()
+        cmd = cmd.strip().lower()
+        return cmd, *args
+    except:
+        return " "    
 
 def add_contact(args, contacts):
-    name, phone = args
-    contacts[name] = phone
-    return "Contact added."
+    try:
+        name, phone = args
+        contacts[name] = phone
+        return "Contact added."
+    except:
+        return "Wrong data, must be \nName number"
 
 def change_contact(args, contacts):
-    name, phone = args
-    contacts[name] = phone
+    try:
+        name, phone = args
+    except:
+        return "Wrong data, must be \nName number"
+    if contacts.get(name):
+        contacts[name] = phone
+    else: 
+        return "Contact doesn't exist"
     return "Contact Updated."
 
 def show_contact(args, contacts):
@@ -22,7 +34,12 @@ def show_contact(args, contacts):
         return "Contact doesn't exist"
 
 def show_all(contacts):        
-    return  contacts
+    resp = ""
+    for contact in contacts:
+        resp = resp + contact + " phone " + contacts[contact] + "\n"
+    if resp == "":
+        return "There is no any contact"
+    return resp
         
 
 def main():
